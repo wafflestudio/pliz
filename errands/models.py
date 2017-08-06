@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-
+from accounts.models import User
 
 # Create your models here.
 class Errand(models.Model):
@@ -10,7 +10,7 @@ class Errand(models.Model):
         ("ERRAND","Errand"),
         ("ETC","Etc"),
     )
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='errand', null=True)
+    owner = models.ForeignKey(User, related_name='errand', null=True)
     created = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=100, blank=True, default='Blank Title')
     text = models.TextField()
