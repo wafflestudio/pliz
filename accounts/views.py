@@ -1,10 +1,17 @@
 from django.shortcuts import render
-from accounts.serializers import UserSerializer
-from rest_framework import generics, status
-from accounts.models import User
-from rest_framework.decorators import api_view
+
+from rest_framework import generics, status, permissions
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+
+from accounts.models import User
+from errands.models import Errand
+
+from accounts.serializers import UserSerializer
+from errands.serializers import ErrandSerializer
 
 
 # Create your views here.
@@ -21,17 +28,10 @@ def user_signup(request):
     data = request.data
     username = data.get('username', '')
     password = data.get('password', '')
-    password_confirm = data.get('passwordConfirm', '')
     email = data.get('email', '')
 
     if len(username) < 6:
         return Response(data={'message':'invalid username, must be at least 6 characters long'}, status=status.HTTP_403_FORBIDDEN)
-
-    if password != password_confirm:
-        return Response(data={'message':'please confirm input password'}, status=status.HTTP_403_FORBIDDEN)
-
-    if len(password) < 8:
-        return Response(data={'message':'password must be at least 8 characters long'}, status=status.HTTP_403_FORBIDDEN)
 
     if not is_valid_email(email):
         return Response(data={'message':'invalid email'}, status=status.HTTP_403_FORBIDDEN)
@@ -53,5 +53,16 @@ class UserList(generics.ListAPIView):
 class UserDetail(generics.RetrieveAPIView):
     queryset=User.objects.all()
     serializer_class= UserSerializer
+
+
+@permission_classes((permissions.IsAuthenticated,))
+@api_view(['GET'])
+def user_Errand_List(request):
+    if request.method == 'GET':
+        user = request.user
+        queryset=Errand.objects.filter(owner=user)
+        serializer = ErrandSerializer(queryset, many=True)
+        return Response(serializer.data)
+
 
 

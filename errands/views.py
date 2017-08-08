@@ -8,15 +8,6 @@ from rest_framework.decorators import api_view, permission_classes
 
 
 
-@permission_classes((permissions.IsAuthenticated,))
-@api_view(['GET'])
-def user_profile_detail(request):
-    if request.method == 'GET':
-        user = request.user
-        user_serializer = UserSerializer(user)
-        return Response(user_serializer.data)
-
-
 class Delivery(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -31,20 +22,12 @@ class Homework(generics.ListCreateAPIView):
     serializer_class= ErrandSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
-class Errand(generics.ListCreateAPIView):
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
-    queryset=Errand.objects.filter(category="ERRAND")
-    serializer_class= ErrandSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-
 class Etc(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-    queryset=Errand.objects.filter(category="ETC")
+    queryset= Errand.objects.filter(category="ETC")
     serializer_class= ErrandSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-
 
 class ErrandList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
@@ -58,4 +41,3 @@ class ErrandDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class= ErrandSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                       IsOwnerOrReadOnly,)
-

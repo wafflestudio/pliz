@@ -5,5 +5,6 @@ from . import views
 
 urlpatterns = [
     url(r'^signup/$', views.user_signup, name='signup'),
-    url(r'^api-token-auth/$', obtain_auth_token),
+    url(r'^login/$', obtain_auth_token),
+    url(r'^myErrand/$', views.user_Errand_List ),
 ]

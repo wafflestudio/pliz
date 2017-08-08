@@ -7,7 +7,6 @@ class Errand(models.Model):
     CATEGORY_CHOICES = (
         ("DELIVERY","Delivery"),
         ("HOMEWORK","Homework"),
-        ("ERRAND","Errand"),
         ("ETC","Etc"),
     )
     owner = models.ForeignKey(User, related_name='errand', null=True)

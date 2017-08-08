@@ -8,4 +8,4 @@ class ErrandSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Errand
-        fields = ('id', 'owner_name', 'title','text','extraCost','reward','category','created')
+        fields = ('id', 'owner_name', 'title','text','extraCost','reward','category',)
