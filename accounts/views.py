@@ -67,3 +67,13 @@ def user_Errand_List(request):
         page = paginator.paginate_queryset(queryset, request)
         serializer = ErrandSerializer(page, many=True)
         return paginator.get_paginated_response(serializer.data)
+
+
+@permission_classes((permissions.IsAuthenticated,))
+@api_view(['GET'])
+def user_Profile(request):
+    if request.method == 'GET':
+        user = request.user
+        user_serializer = UserSerializer(user)
+        return Response(user_serializer.data)
+

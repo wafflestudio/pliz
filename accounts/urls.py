@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^signup/$', views.user_signup, name='signup'),
     url(r'^login/$', obtain_auth_token),
     url(r'^myErrand/$', views.user_Errand_List ),
+    url(r'^profile/$', views.user_Profile ),
 ]
