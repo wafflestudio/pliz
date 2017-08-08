@@ -7,3 +7,5 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     name = models.CharField(max_length=30, blank=True, default='')
     self_introduction = models.TextField(blank=True, default='')
+    class Meta:
+        ordering = ('username',)

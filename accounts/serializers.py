@@ -3,8 +3,9 @@ from accounts.models import User
 from errands.models import Errand
 
 class UserSerializer(serializers.ModelSerializer):
-    errands = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    errands = serializers.PrimaryKeyRelatedField(many=True, queryset=Errand.objects.all())
+      
 
     class Meta:
       model = User
-      fields = ('id','email','username', 'errands','name','self_introduction')
+      fields = ('username','id','email','name','self_introduction','errands')

@@ -9,7 +9,7 @@ class Errand(models.Model):
         ("HOMEWORK","Homework"),
         ("ETC","Etc"),
     )
-    owner = models.ForeignKey(User, related_name='errand', null=True)
+    owner = models.ForeignKey(User, related_name='errands', null=True)
     created = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=100, blank=True, default='Blank Title')
     text = models.TextField()
