@@ -7,5 +7,5 @@ from rest_framework.response import Response
 def api_root(request, format=None):
     return Response({
         'users': reverse('user_list', request=request, format=format),
-        'bills': reverse('errand_list', request=request, format=format)
+        'errands': reverse('errand_list', request=request, format=format)
     })
