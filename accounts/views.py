@@ -3,6 +3,7 @@ from django.shortcuts import render
 from rest_framework import generics, status, permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework.settings import api_settings
 
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -59,10 +60,10 @@ class UserDetail(generics.RetrieveAPIView):
 @api_view(['GET'])
 def user_Errand_List(request):
     if request.method == 'GET':
+        pagination_class = api_settings.DEFAULT_PAGINATION_CLASS
+        paginator = pagination_class()
         user = request.user
         queryset=Errand.objects.filter(owner=user)
-        serializer = ErrandSerializer(queryset, many=True)
-        return Response(serializer.data)
-
-
-
+        page = paginator.paginate_queryset(queryset, request)
+        serializer = ErrandSerializer(page, many=True)
+        return paginator.get_paginated_response(serializer.data)
