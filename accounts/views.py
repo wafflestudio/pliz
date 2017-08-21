@@ -80,3 +80,13 @@ def user_profile(request):
         return Response(user_serializer.data)
 
 
+@permission_classes((permissions.IsAuthenticated,))
+@api_view(['POST'])
+def update_user_introduction(request):
+    if request.method == 'POST':
+        data = request.data
+        user = request.user
+        user.self_introduction = data.get('self_introduction', '')
+        user.save()
+        return Response(data={'message':'user registration successful'})
+

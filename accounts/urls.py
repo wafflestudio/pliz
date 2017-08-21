@@ -9,4 +9,6 @@ urlpatterns = [
     url(r'^login/$', obtain_auth_token),
     url(r'^myerrand/$', views.user_errand_list ),
     url(r'^profile/$', views.user_profile ),
+    url(r'^update_introduction/$', views.update_user_introduction ),
+
 ]
