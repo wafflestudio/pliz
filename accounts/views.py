@@ -30,6 +30,7 @@ def user_signup(request):
     username = data.get('username', '')
     password = data.get('password', '')
     email = data.get('email', '')
+    name = data.get('name', '')
 
     if len(username) < 6:
         return Response(data={'message':'invalid username, must be at least 6 characters long'}, status=status.HTTP_403_FORBIDDEN)
@@ -40,6 +41,7 @@ def user_signup(request):
     user, created = User.objects.get_or_create(username=username)
     if created:
         user.email=email
+        user.name=name
         user.set_password(password)
         user.save()
         return Response(data={'message':'user registration successful'}, status=status.HTTP_201_CREATED)
