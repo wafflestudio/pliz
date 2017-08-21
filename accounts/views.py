@@ -60,7 +60,7 @@ class UserDetail(generics.RetrieveAPIView):
 
 @permission_classes((permissions.IsAuthenticated,))
 @api_view(['GET'])
-def user_Errand_List(request):
+def user_errand_list(request):
     if request.method == 'GET':
         pagination_class = api_settings.DEFAULT_PAGINATION_CLASS
         paginator = pagination_class()
@@ -73,9 +73,10 @@ def user_Errand_List(request):
 
 @permission_classes((permissions.IsAuthenticated,))
 @api_view(['GET'])
-def user_Profile(request):
+def user_profile(request):
     if request.method == 'GET':
         user = request.user
         user_serializer = UserSerializer(user)
         return Response(user_serializer.data)
+
 
