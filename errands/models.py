@@ -19,4 +19,4 @@ class Errand(models.Model):
             choices=CATEGORY_CHOICES, 
             default="DELIVERY" )
     class Meta:
-        ordering = ('created',)
+        ordering = ('-created',)
